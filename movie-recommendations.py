@@ -23,7 +23,7 @@ indices =pd.Series(df.index,index=df['Title'])
 @app.route('/recommendations/<title>',methods=['GET'])
 def make_recomendataions(title):
   '''
-  Function to that finds the top 10 most similar movies based on cosine similarity pg tfidf vector
+  Function that finds the top 10 most similar movies based on cosine similarity between tfidf vector
   '''
   try:
     idx =indices[title]
