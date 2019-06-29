@@ -1,6 +1,6 @@
 import pandas as pd
 import warnings
-from flask import Flask,jsonify,request
+from flask import Flask
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
@@ -34,7 +34,7 @@ def make_recomendataions(title):
     recommendations = list(titles.iloc[movie_indices])
     data = pd.DataFrame(data=recommendations)
     return (data.to_string(index=False,header=False)
-    
+
   except KeyError as e:
     return "ERROR MOVIE NOT FOUND",404
 
