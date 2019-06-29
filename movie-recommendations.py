@@ -33,9 +33,8 @@ def make_recomendataions(title):
     movie_indices = [i[0] for i in similarity_score]
     recommendations = list(titles.iloc[movie_indices])
     data = pd.DataFrame(data=recommendations)
-    return jsonify(data.to_string(index=False,header=False))
-    #return jsonify('Top10':data.to_string(index=False,header=False))
-  
+    return (data.to_string(index=False,header=False)
+    
   except KeyError as e:
     return "ERROR MOVIE NOT FOUND",404
 
