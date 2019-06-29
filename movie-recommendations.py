@@ -33,9 +33,10 @@ def make_recomendataions(title):
     movie_indices = [i[0] for i in similarity_score]
     recommendations = list(titles.iloc[movie_indices])
     data = pd.DataFrame(data=recommendations)
-    return (data.to_string(index=False,header=False)
+    return (data.to_string(index=False,header=False))
 
   except KeyError as e:
     return "ERROR MOVIE NOT FOUND",404
-
-app.run(debug=True)
+    
+if __name__ == "__main__":
+  app.run(debug=True)
