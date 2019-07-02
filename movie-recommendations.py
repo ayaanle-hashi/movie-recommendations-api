@@ -25,6 +25,7 @@ def make_recomendataions():
   '''
   Function that finds the top 10 most similar movies based on cosine similarity between tfidf vector
   '''
+  
   try:
     title = request.data
     title = title.decode("utf-8")
