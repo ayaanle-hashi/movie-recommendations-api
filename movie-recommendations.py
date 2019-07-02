@@ -1,6 +1,6 @@
 import pandas as pd
 import warnings
-from flask import Flask
+from flask import Flask,request,jsonify
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
@@ -20,23 +20,24 @@ titles = df['Title']
 
 indices =pd.Series(df.index,index=df['Title'])
 
-@app.route('/recommendations/<title>',methods=['GET'])
-def make_recomendataions(title):
+@app.route('/recommendations/',methods=['POST'])
+def make_recomendataions():
   '''
   Function that finds the top 10 most similar movies based on cosine similarity between tfidf vector
   '''
   try:
+    title = request.data
+    title = title.decode("utf-8")
     idx =indices[title]
     similarity_score = list(enumerate(cosine_sim[idx]))
     similarity_score = sorted(similarity_score,key=lambda x: x[1],reverse=True)
     similarity_score = similarity_score [1:11]
     movie_indices = [i[0] for i in similarity_score]
     recommendations = list(titles.iloc[movie_indices])
-    data = pd.DataFrame(data=recommendations)
-    return (data.to_string(index=False,header=False))
+    return jsonify({'Top 10':recommendations})
 
   except KeyError as e:
-    return "ERROR MOVIE NOT FOUND",404
+    return jsonify("ERROR MOVIE NOT FOUND"),404
     
 if __name__ == "__main__":
   app.run(debug=True)
